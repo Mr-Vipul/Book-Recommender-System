@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Recommender System</title>
+    <!-- Latest compiled and minified CSS --> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background for better visibility */
+            color: #343a40; /* Dark text for readability */
+        }
+        .navbar {
+            background-color: #007bff; /* Bootstrap primary color */
+            border-radius: 0; /* Remove rounded corners */
+        }
+        .navbar-brand, .navbar-nav > li > a {
+            color: white !important; /* Ensure white text for the brand and links */
+        }
+        .navbar-nav > li > a:hover {
+            color: #ffc107; /* Change color on hover */
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            border: none;
+            border-radius: 10px; /* Rounded corners */
+            transition: transform 0.2s; /* Smooth scaling on hover */
+        }
+        .card:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
+        .card-img-top {
+            border-top-left-radius: 10px; /* Rounded top corners */
+            border-top-right-radius: 10px; /* Rounded top corners */
+            height: 250px; /* Fixed height for images */
+            object-fit: cover; /* Cover the area without distortion */
+        }
+        .card-body {
+            padding: 15px; /* Add padding to card body */
+            text-align: center; /* Center align text */
+        }
+        .btn-warning {
+            background-color: #ffc107; /* Warning button color */
+            border: none; /* Remove border */
+        }
+        .btn-warning:hover {
+            background-color: #e0a800; /* Darker shade on hover */
+        }
+        h1 {
+            font-size: 40px;
+            margin-bottom: 30px;
+            text-align: center; /* Centering the heading */
+        }
+        .search-container {
+            text-align: center;
+            margin-bottom: 30px; /* Space between heading and search form */
+        }
+        .no-recommendation {
+            font-size: 18px;
+            color: #6c757d; /* Lighter text for no recommendations message */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">My Book Recommender</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/recommend">Recommend</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="search-container">
+            <h1>Recommend Books</h1>
+            <form action="/recommend_books" method="post" class="form-inline justify-content-center">
+                <input name="user_input" type="text" class="form-control" placeholder="Enter book title or author..." required style="width: 300px;">
+                <button type="submit" class="btn btn-lg btn-warning ml-2">Get Recommendations</button>
+            </form>
+        </div>
+
+        <div class="row">
+            {% if data %}
+                {% for i in data %}
+                    <div class="col-md-3 mb-4">
+                        <div class="card">
+                            <img class="card-img-top" src="{{ i[2] }}" alt="Book Cover">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ i[0] }}</h5>
+                                <p class="card-text">Author: {{ i[1] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-12 text-center">
+                    <h4 class="no-recommendation">No recommendations available. Please enter a book title or author.</h4>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Optional: Add Bootstrap JS for additional functionality -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT12PHuHn8me8J93iwI1oKRxLwJcKKnq1YYv8pUqbx/p9y0K8B" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-JZyYt+I26LjrO60s8sa+x3itj/QlBQ0fW6e3R5TcBbKhG/N75f7FAtI1GHoT22b1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-ggOyR0iXCbMQv3XIp9pOS7YFZZkD73Z7W8//TIpFJjQfU5eV1ZLgG7pM4Pek7y8c" crossorigin="anonymous"></script>
+</body>
+</html>
